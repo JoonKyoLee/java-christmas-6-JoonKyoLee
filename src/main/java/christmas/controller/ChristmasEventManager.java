@@ -1,5 +1,6 @@
 package christmas.controller;
 
+import christmas.domain.Customer;
 import christmas.domain.Date;
 import christmas.domain.Order;
 import christmas.exception.InputException;
@@ -21,6 +22,19 @@ public class ChristmasEventManager {
         this.inputView = inputView;
         this.outputView = outputView;
         this.convertInputValidator = convertInputValidator;
+    }
+
+    public void run() {
+        Customer customer = readCustomerRequest();
+    }
+
+    private Customer readCustomerRequest() {
+        outputView.printGreetingMessage();
+
+        Date date = repeatUntilReadValidInput(this::takeDate);
+        Order order = repeatUntilReadValidInput(this::takeOrder);
+
+        return new Customer(date, order);
     }
 
     private Date takeDate() {
