@@ -9,6 +9,8 @@ public class ConvertInputValidator {
     private static final String SEPARATE_BETWEEN_MENUS_DELIMITER = ",";
     private static final String SEPARATE_BETWEEN_MENU_AND_PRICE_DELIMITER = "-";
     private static final String SPACE_DELIMITER = " ";
+    private static final String EMPTY_VALUE = "";
+
 
     public ConvertInputValidator() {
     }
@@ -29,5 +31,9 @@ public class ConvertInputValidator {
         return List.of(input.replace(SEPARATE_BETWEEN_MENU_AND_PRICE_DELIMITER, SPACE_DELIMITER)
                 .replace(SEPARATE_BETWEEN_MENUS_DELIMITER, SPACE_DELIMITER)
                 .split(SPACE_DELIMITER));
+    }
+
+    private int countDelimiter(String input, String delimiter) {
+        return input.length() - input.replace(delimiter, EMPTY_VALUE).length();
     }
 }
