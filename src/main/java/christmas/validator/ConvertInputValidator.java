@@ -9,13 +9,13 @@ import java.util.stream.IntStream;
 
 public class ConvertInputValidator {
     private static final String SEPARATE_BETWEEN_MENUS_DELIMITER = ",";
-    private static final String SEPARATE_BETWEEN_MENU_AND_PRICE_DELIMITER = "-";
+    private static final String SEPARATE_BETWEEN_MENU_AND_QUANTITY_DELIMITER = "-";
     private static final String SPACE_DELIMITER = " ";
     private static final String EMPTY_VALUE = "";
     private static final int DIFFERENCE_BETWEEN_DELIMITERS = 1;
     private static final int MENU_TO_DELIMITER_RATIO = 2;
     private static final int MENU_MANE_INDEX = 0;
-    private static final int PRICE_INDEX = 1;
+    private static final int MENU_QUANTITY_INDEX = 1;
 
 
     public ConvertInputValidator() {
@@ -35,7 +35,7 @@ public class ConvertInputValidator {
         validateMenuInputFormat(deletedDelimiterMenu, input);
 
         List<String> menuName = extractEachValue(deletedDelimiterMenu, MENU_MANE_INDEX);
-        List<Integer> price = convertPrice(extractEachValue(deletedDelimiterMenu, PRICE_INDEX));
+        List<Integer> menuQuantity = convertQuantity(extractEachValue(deletedDelimiterMenu, MENU_QUANTITY_INDEX));
     }
 
 
@@ -45,14 +45,14 @@ public class ConvertInputValidator {
 
     private void validateMenuInputFormat(List<String> deletedDelimiterMenu, String input) {
         int menuCount = deletedDelimiterMenu.size();
-        int countDelimiterBetweenMenuAndPrice = countDelimiter(input, SEPARATE_BETWEEN_MENU_AND_PRICE_DELIMITER);
+        int countDelimiterBetweenMenuAndQuantity = countDelimiter(input, SEPARATE_BETWEEN_MENU_AND_QUANTITY_DELIMITER);
         int countDelimiterBetweenMenus = countDelimiter(input, SEPARATE_BETWEEN_MENUS_DELIMITER);
 
         if (hasSpaceBetweenInputFormat(input)) {
             throw new InputException(ErrorMessage.ORDER_FORMAT_IS_NOT_VALID);
         }
 
-        if (!validateDelimitersAndMenuCount(countDelimiterBetweenMenuAndPrice,
+        if (!validateDelimitersAndMenuCount(countDelimiterBetweenMenuAndQuantity,
                 countDelimiterBetweenMenus,
                 menuCount)) {
             throw new InputException(ErrorMessage.ORDER_FORMAT_IS_NOT_VALID);
@@ -60,7 +60,7 @@ public class ConvertInputValidator {
     }
 
     private List<String> deleteDelimiter(String input) {
-        return List.of(input.replace(SEPARATE_BETWEEN_MENU_AND_PRICE_DELIMITER, SPACE_DELIMITER)
+        return List.of(input.replace(SEPARATE_BETWEEN_MENU_AND_QUANTITY_DELIMITER, SPACE_DELIMITER)
                 .replace(SEPARATE_BETWEEN_MENUS_DELIMITER, SPACE_DELIMITER)
                 .split(SPACE_DELIMITER));
     }
@@ -74,23 +74,24 @@ public class ConvertInputValidator {
     }
 
     private boolean validateDelimitersAndMenuCount(
-            int delimiterCountBetweenMenuAndPrice,
+            int delimiterCountBetweenMenuAndQuantity,
             int delimiterCountBetweenMenus,
             int menuCount) {
-        return validateDelimiterAndMenuCountRatio(delimiterCountBetweenMenuAndPrice, menuCount)
-                && validateBetweenDelimitersDifference(delimiterCountBetweenMenuAndPrice, delimiterCountBetweenMenus);
+        return validateDelimiterAndMenuCountRatio(delimiterCountBetweenMenuAndQuantity, menuCount)
+                && validateBetweenDelimitersDifference(
+                        delimiterCountBetweenMenuAndQuantity, delimiterCountBetweenMenus);
     }
 
     private boolean validateDelimiterAndMenuCountRatio(
-            int delimiterCountBetweenMenuAndPrice,
+            int delimiterCountBetweenMenuAndQuantity,
             int menuCount) {
-        return menuCount / delimiterCountBetweenMenuAndPrice == MENU_TO_DELIMITER_RATIO;
+        return menuCount / delimiterCountBetweenMenuAndQuantity == MENU_TO_DELIMITER_RATIO;
     }
 
     private boolean validateBetweenDelimitersDifference(
-            int delimiterCountBetweenMenuAndPrice,
+            int delimiterCountBetweenMenuAndQuantity,
             int delimiterCountBetweenMenus) {
-        return delimiterCountBetweenMenuAndPrice - delimiterCountBetweenMenus == DIFFERENCE_BETWEEN_DELIMITERS;
+        return delimiterCountBetweenMenuAndQuantity - delimiterCountBetweenMenus == DIFFERENCE_BETWEEN_DELIMITERS;
     }
 
     private List<String> extractEachValue(List<String> origin, int indexToExtract) {
@@ -100,9 +101,9 @@ public class ConvertInputValidator {
                 .toList();
     }
 
-    private List<Integer> convertPrice(List<String> price) {
+    private List<Integer> convertQuantity(List<String> quantiity) {
         try {
-            return price.stream()
+            return quantiity.stream()
                     .map(this::parseInt)
                     .toList();
         } catch (NumberFormatException exception) {
