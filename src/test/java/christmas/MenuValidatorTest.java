@@ -78,7 +78,7 @@ public class MenuValidatorTest {
                 Arguments.of("딸기케이크-1,아이스크림-1"),
                 Arguments.of("폭립-1"),
                 Arguments.of("티본스테이크-1,딸기케이크-2"),
-                Arguments.of("코카콜라-2,크리스마스파스타-23")
+                Arguments.of("코카콜라-2,크리스마스파스타-3")
         );
     }
 
