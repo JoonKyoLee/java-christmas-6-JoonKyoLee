@@ -5,6 +5,7 @@ import christmas.exception.InputException;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.IntStream;
 
 public class ConvertInputValidator {
     private static final String SEPARATE_BETWEEN_MENUS_DELIMITER = ",";
@@ -13,6 +14,8 @@ public class ConvertInputValidator {
     private static final String EMPTY_VALUE = "";
     private static final int DIFFERENCE_BETWEEN_DELIMITERS = 1;
     private static final int MENU_TO_DELIMITER_RATIO = 2;
+    private static final int MENU_MANE_INDEX = 0;
+    private static final int PRICE_INDEX = 1;
 
 
     public ConvertInputValidator() {
@@ -30,6 +33,9 @@ public class ConvertInputValidator {
         List<String> deletedDelimiterMenu = deleteDelimiter(input);
 
         validateMenuInputFormat(deletedDelimiterMenu, input);
+
+        List<String> menuName = extractEachValue(deletedDelimiterMenu, MENU_MANE_INDEX);
+        List<Integer> price = convertPrice(extractEachValue(deletedDelimiterMenu, PRICE_INDEX));
     }
 
 
@@ -85,5 +91,22 @@ public class ConvertInputValidator {
             int delimiterCountBetweenMenuAndPrice,
             int delimiterCountBetweenMenus) {
         return delimiterCountBetweenMenuAndPrice - delimiterCountBetweenMenus == DIFFERENCE_BETWEEN_DELIMITERS;
+    }
+
+    private List<String> extractEachValue(List<String> origin, int indexToExtract) {
+        return IntStream.range(0, origin.size())
+                .filter(i -> i % 2 == indexToExtract)
+                .mapToObj(origin::get)
+                .toList();
+    }
+
+    private List<Integer> convertPrice(List<String> price) {
+        try {
+            return price.stream()
+                    .map(this::parseInt)
+                    .toList();
+        } catch (NumberFormatException exception) {
+            throw new InputException(ErrorMessage.ORDER_FORMAT_IS_NOT_VALID);
+        }
     }
 }
