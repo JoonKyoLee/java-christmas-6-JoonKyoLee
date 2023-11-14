@@ -1,6 +1,7 @@
 package christmas.controller;
 
 import christmas.domain.Date;
+import christmas.domain.Order;
 import christmas.exception.InputException;
 import christmas.validator.ConvertInputValidator;
 import christmas.view.InputView;
@@ -27,6 +28,13 @@ public class ChristmasEventManager {
         String input = inputView.readInput();
         return new Date(convertInputValidator.convertDate(input));
     }
+
+    private Order takeOrder() {
+        outputView.askMenuAndQuantity();
+        String order = inputView.readInput();
+        return new Order(convertInputValidator.convertOrder(order));
+    }
+
 
     private <T> T repeatUntilReadValidInput(Supplier<T> supplier) {
         while (true) {
