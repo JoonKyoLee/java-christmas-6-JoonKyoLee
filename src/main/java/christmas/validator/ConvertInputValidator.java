@@ -17,7 +17,6 @@ public class ConvertInputValidator {
     private static final int MENU_TO_DELIMITER_RATIO = 2;
     private static final int MENU_MANE_INDEX = 0;
     private static final int MENU_QUANTITY_INDEX = 1;
-    private static final int HAS_NOTHING = 0;
 
     public ConvertInputValidator() {
     }
