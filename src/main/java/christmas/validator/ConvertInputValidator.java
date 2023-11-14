@@ -6,6 +6,7 @@ import christmas.exception.InputException;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.IntStream;
+import java.util.stream.Collectors;
 
 public class ConvertInputValidator {
     private static final String SEPARATE_BETWEEN_MENUS_DELIMITER = ",";
@@ -36,6 +37,10 @@ public class ConvertInputValidator {
 
         List<String> menuName = extractEachValue(deletedDelimiterMenu, MENU_MANE_INDEX);
         List<Integer> menuQuantity = convertQuantity(extractEachValue(deletedDelimiterMenu, MENU_QUANTITY_INDEX));
+
+        validateDuplicatedMenuName(menuName);
+
+        return makeMap(menuName, menuQuantity);
     }
 
 
@@ -109,5 +114,23 @@ public class ConvertInputValidator {
         } catch (NumberFormatException exception) {
             throw new InputException(ErrorMessage.ORDER_FORMAT_IS_NOT_VALID);
         }
+    }
+
+    private void validateDuplicatedMenuName(List<String> menuName) {
+        if (hasDuplicatedMenuName(menuName)) {
+            throw new InputException(ErrorMessage.ORDER_FORMAT_IS_NOT_VALID);
+        }
+    }
+
+    private boolean hasDuplicatedMenuName(List<String> menuName) {
+        return menuName.stream()
+                .distinct()
+                .count() != menuName.size();
+    }
+
+    private Map<String, Integer> makeMap(List<String> key, List<Integer> value) {
+        return IntStream.range(0, key.size())
+                .boxed()
+                .collect(Collectors.toMap(key::get, value::get));
     }
 }
