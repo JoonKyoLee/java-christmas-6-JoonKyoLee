@@ -48,7 +48,9 @@ public class ConvertInputValidatorTest {
                 Arguments.of("--티본스테이크1,딸기케이크2"),
                 Arguments.of("초코케이크|2,크리스마스파스타|3"),
                 Arguments.of("초코케이크-1, 타파스-10"),
-                Arguments.of("양송이수프|1|해산물파스타|1|티본스테이크|1|아이스크림|1")
+                Arguments.of("양송이수프|1|해산물파스타|1|티본스테이크|1|아이스크림|1"),
+                Arguments.of(",양송이수프-1,해산물파스타-1"),
+                Arguments.of("양송이수프,1-해산물파스타-2")
         );
     }
 
