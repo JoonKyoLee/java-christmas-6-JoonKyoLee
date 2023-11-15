@@ -208,7 +208,7 @@ public class OrderTest {
     }
 
     @ParameterizedTest
-    @DisplayName("혜택 금액을 계산한 결과가 옳은지 확인한다.")
+    @DisplayName("할인 후 예상금액을 계산한 결과가 옳은지 확인한다.")
     @CsvSource(value = {"154000,30000,124000", "9000,0,9000", "10000,2400,7600"}, delimiter = ',')
     void calculateExpectedPaymentTest(int totalAmount, int discountAmount, int expected) {
         order = new Order(new MenuValidator(), hasManyMenus);
