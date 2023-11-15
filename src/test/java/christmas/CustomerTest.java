@@ -129,7 +129,7 @@ public class CustomerTest {
     }
 
     @ParameterizedTest
-    @DisplayName("각 날짜와 총주문 금액에 맞게 총혜택 금액을 잘 계산한다.")
+    @DisplayName("총주문 금액과 총혜택 금액을 바탕으로 혜택 적용 후 예상 금액을 잘 계산한다.")
     @MethodSource("generateMenuToGetExpectedPrice")
     void calculateExpectedPriceTest(
             Map<String, Integer> menu, int date, int expected
