@@ -31,13 +31,19 @@ public class Order {
     }
 
     public int calculateTotalAmountBeforeDiscount() {
-        return order.values()
+        return order.entrySet()
                 .stream()
-                .mapToInt(Integer::intValue)
+                .mapToInt(entry -> {
+                    String menuName = entry.getKey();
+                    int quantity = entry.getValue();
+
+                    return Menu.getMenu(menuName).getPrice() * quantity;
+                })
                 .sum();
     }
 
-    public void calculateChristmasDDayEventDiscount(Map<Integer, Integer> appliedDiscount, int elapsedDaysFromDDayEvent) {
+    public void calculateChristmasDDayEventDiscount(Map<Integer, Integer> appliedDiscount,
+                                                    int elapsedDaysFromDDayEvent) {
         appliedDiscount.put(
                 CHRISTMAS_D_DAY_EVENT_INDEX
                 , DEFAULT_DISCOUNT_AMOUNT + CHRISTMAS_D_DAY_DISCOUNT_INCREASE_PER_DAY * elapsedDaysFromDDayEvent
@@ -79,9 +85,10 @@ public class Order {
     public void grantChampagneOnOrder(Map<Integer, Integer> appliedDiscount) {
         appliedDiscount.put(
                 GRANT_CHAMPAGNE_INDEX
-                , GRANT_CHAMPAGNE_AMOUNT
+                , Menu.CHAMPAGNE.getPrice()
         );
     }
+
     public boolean canGrantChampagne(int totalAmount) {
         return totalAmount >= GRANT_CHAMPAGNE_AMOUNT;
     }
