@@ -68,6 +68,15 @@ public class OutputView {
         System.out.println(eventList);
     }
 
+    public void printTotalEventPrice(int totalDiscountPrice) {
+        System.out.println(VIEW_TOTAL_EVENT_PRICE.getMessage());
+
+        if(totalDiscountPrice > 0) {
+            System.out.print(MINUS_SIGN);
+        }
+        printfAndNewLine(PAYMENT_FORMAT, totalDiscountPrice);
+    }
+
     private void printNewLineAndPrintln(String message) {
         printNewLine();
         System.out.println(message);
