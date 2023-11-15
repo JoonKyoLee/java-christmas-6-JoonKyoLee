@@ -114,7 +114,7 @@ public class OrderTest {
         return Stream.of(
                 Arguments.of(
                         hasManyMenus
-                        , 6_000
+                        , 12_138
                 ),
                 Arguments.of(
                         hasLessMenus
@@ -142,7 +142,7 @@ public class OrderTest {
         return Stream.of(
                 Arguments.of(
                         hasManyMenus
-                        , 5_000
+                        , 10_115
                 ),
                 Arguments.of(
                         hasLessMenus
@@ -191,11 +191,11 @@ public class OrderTest {
                         hasManyMenus
                         , Map.of(
                                 1, 3_400,
-                                2, 6_000,
+                                2, 12_138,
                                 4, 1_000,
                                 5, 25_000
                         )
-                        , 35_400
+                        , 41_538
                 ),
                 Arguments.of(
                         hasLessMenus
@@ -209,7 +209,7 @@ public class OrderTest {
 
     @ParameterizedTest
     @DisplayName("할인 후 예상금액을 계산한 결과가 옳은지 확인한다.")
-    @CsvSource(value = {"154000,30000,124000", "9000,0,9000", "10000,2400,7600"}, delimiter = ',')
+    @CsvSource(value = {"307000,35400,296600", "154000,30000,149000", "9000,0,9000"}, delimiter = ',')
     void calculateExpectedPaymentTest(int totalAmount, int discountAmount, int expected) {
         order = new Order(new MenuValidator(), hasManyMenus);
 
