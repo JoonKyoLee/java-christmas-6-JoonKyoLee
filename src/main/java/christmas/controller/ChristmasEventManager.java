@@ -1,9 +1,9 @@
 package christmas.controller;
 
-import christmas.domain.Customer;
-import christmas.domain.Date;
+import christmas.domain.customer.Customer;
+import christmas.domain.customer.Date;
 import christmas.domain.EventBadge;
-import christmas.domain.Order;
+import christmas.domain.customer.Order;
 import christmas.exception.InputException;
 import christmas.validator.ConvertInputValidator;
 import christmas.validator.MenuValidator;

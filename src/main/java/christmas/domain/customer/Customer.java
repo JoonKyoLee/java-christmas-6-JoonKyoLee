@@ -1,4 +1,4 @@
-package christmas.domain;
+package christmas.domain.customer;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

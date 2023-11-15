@@ -1,10 +1,10 @@
-package christmas;
+package christmas.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import christmas.domain.Customer;
-import christmas.domain.Date;
-import christmas.domain.Order;
+import christmas.domain.customer.Customer;
+import christmas.domain.customer.Date;
+import christmas.domain.customer.Order;
 import christmas.validator.MenuValidator;
 
 import java.util.HashMap;

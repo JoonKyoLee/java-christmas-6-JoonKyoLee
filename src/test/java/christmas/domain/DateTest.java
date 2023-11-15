@@ -1,10 +1,10 @@
-package christmas;
+package christmas.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-import christmas.domain.Date;
+import christmas.domain.customer.Date;
 import christmas.exception.ErrorMessage;
 
 import org.junit.jupiter.api.DisplayName;
