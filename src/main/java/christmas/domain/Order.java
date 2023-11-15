@@ -8,6 +8,7 @@ import java.util.Map;
 
 public class Order {
     private static final int GRANT_CHAMPAGNE_AMOUNT = 120_000;
+    private static final int WEEK_DISCOUNT_AMOUNT = 2_023;
     private static final int DEFAULT_DISCOUNT_AMOUNT = 1_000;
     private static final int CHRISTMAS_D_DAY_DISCOUNT_INCREASE_PER_DAY = 100;
     private static final int CHRISTMAS_D_DAY_EVENT_INDEX = 1;
@@ -28,6 +29,10 @@ public class Order {
 
     private void validate(Map<String, Integer> order) {
         menuValidator.validate(order);
+    }
+
+    public Map<String, Integer> getOrder() {
+        return order;
     }
 
     public int calculateTotalAmountBeforeDiscount() {
@@ -53,14 +58,14 @@ public class Order {
     public void weekdayDiscount(Map<Integer, Integer> appliedDiscount) {
         appliedDiscount.put(
                 WEEKDAY_EVENT_INDEX
-                , menuCount(MenuType.DESSERT) * DEFAULT_DISCOUNT_AMOUNT
+                , menuCount(MenuType.DESSERT) * WEEK_DISCOUNT_AMOUNT
         );
     }
 
     public void weekendDiscount(Map<Integer, Integer> appliedDiscount) {
         appliedDiscount.put(
                 WEEKEND_EVENT_INDEX
-                , menuCount(MenuType.MAIN) * DEFAULT_DISCOUNT_AMOUNT
+                , menuCount(MenuType.MAIN) * WEEK_DISCOUNT_AMOUNT
         );
     }
 
@@ -83,10 +88,12 @@ public class Order {
     }
 
     public void grantChampagneOnOrder(Map<Integer, Integer> appliedDiscount) {
-        appliedDiscount.put(
-                GRANT_CHAMPAGNE_INDEX
-                , Menu.CHAMPAGNE.getPrice()
-        );
+        if(canGrantChampagne(calculateTotalAmountBeforeDiscount())) {
+            appliedDiscount.put(
+                    GRANT_CHAMPAGNE_INDEX
+                    , Menu.CHAMPAGNE.getPrice()
+            );
+        }
     }
 
     public boolean canGrantChampagne(int totalAmount) {
