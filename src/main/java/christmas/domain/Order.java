@@ -100,7 +100,10 @@ public class Order {
                 .sum();
     }
 
-    public int calculateExpectedPayment(int totalAmount, int totalDiscountAmount) {
-        return totalAmount - totalDiscountAmount;
+    public int calculateExpectedPayment(int totalAmount, int discountAmount) {
+        if (totalAmount >= GRANT_CHAMPAGNE_AMOUNT) {
+            return totalAmount - discountAmount + Menu.CHAMPAGNE.getPrice();
+        }
+        return totalAmount - discountAmount;
     }
 }
