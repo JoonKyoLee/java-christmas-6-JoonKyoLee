@@ -14,6 +14,18 @@ public class Customer {
         this.order = order;
     }
 
+    public int getVisitingDate() {
+        return date.getDate();
+    }
+
+    public Map<String, Integer> getCustomerOrder() {
+        return order.getOrder();
+    }
+
+    public int makeTotalPrice() {
+        return order.calculateTotalAmountBeforeDiscount();
+    }
+
     public Map<Integer, Integer> applyDiscountAmount() {
         Map<Integer, Integer> appliedDiscount = new LinkedHashMap<>();
 
@@ -22,6 +34,7 @@ public class Customer {
             applyWeekdayDiscount(appliedDiscount);
             applyWeekendDiscount(appliedDiscount);
             applySpecialDiscount(appliedDiscount);
+            order.grantChampagneOnOrder(appliedDiscount);
         }
 
         return appliedDiscount;
@@ -49,5 +62,13 @@ public class Customer {
         if (date.hasStarInCalendar()) {
             order.specialDiscount(appliedDiscount);
         }
+    }
+
+    public int makeTotalDiscountPrice(Map<Integer, Integer> appliedEvent) {
+        return order.calculateTotalDiscount(appliedEvent);
+    }
+
+    public int makeExpectedPrice(int totalPrice, int totalDiscountPrice) {
+        return order.calculateExpectedPayment(totalPrice, totalDiscountPrice);
     }
 }

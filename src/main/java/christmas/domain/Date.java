@@ -22,6 +22,10 @@ public class Date {
         this.dayOfWeek = calculateDayOfWeek();
     }
 
+    public int getDate() {
+        return date;
+    }
+
     public int calculateDayOfWeek() {
         LocalDate localDate = LocalDate.of(YEAR, MONTH, date);
         return localDate.getDayOfWeek().getValue();
