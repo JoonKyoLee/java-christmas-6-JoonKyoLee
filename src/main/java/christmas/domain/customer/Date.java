@@ -1,18 +1,12 @@
 package christmas.domain.customer;
 
+import christmas.constant.DateConstant;
 import christmas.exception.ErrorMessage;
 import christmas.exception.InputException;
 
 import java.time.LocalDate;
 
 public class Date {
-    private static final int YEAR = 2023;
-    private static final int MONTH = 12;
-    private static final int FIRST_DATE = 1;
-    private static final int LAST_DATE = 31;
-    private static final int CHRISTMAS_DATE = 25;
-    private static final int FRIDAY_INDEX = 5;
-    private static final int SUNDAY_INDEX = 7;
     private final int date;
     private final int dayOfWeek;
 
@@ -27,28 +21,28 @@ public class Date {
     }
 
     public int calculateDayOfWeek() {
-        LocalDate localDate = LocalDate.of(YEAR, MONTH, date);
+        LocalDate localDate = LocalDate.of(DateConstant.YEAR, DateConstant.MONTH, date);
         return localDate.getDayOfWeek().getValue();
     }
 
     public boolean canApplyChristmasDDayDiscount() {
-        return date <= CHRISTMAS_DATE;
+        return date <= DateConstant.CHRISTMAS_DATE;
     }
 
     public int countDaysToApplyChristmasDDayDiscount() {
-        return date - FIRST_DATE;
+        return date - DateConstant.FIRST_DATE;
     }
 
     public boolean isWeekday() {
-        return dayOfWeek == SUNDAY_INDEX || dayOfWeek < FRIDAY_INDEX;
+        return dayOfWeek == DateConstant.SUNDAY_INDEX || dayOfWeek < DateConstant.FRIDAY_INDEX;
     }
 
     public boolean isWeekend() {
-        return FRIDAY_INDEX <= dayOfWeek && dayOfWeek < SUNDAY_INDEX;
+        return DateConstant.FRIDAY_INDEX <= dayOfWeek && dayOfWeek < DateConstant.SUNDAY_INDEX;
     }
 
     public boolean hasStarInCalendar() {
-        return date == CHRISTMAS_DATE || dayOfWeek == SUNDAY_INDEX;
+        return date == DateConstant.CHRISTMAS_DATE || dayOfWeek == DateConstant.SUNDAY_INDEX;
     }
 
     private void validate(int date) {
@@ -62,6 +56,6 @@ public class Date {
     }
 
     private boolean isOutOfRange(int date) {
-        return date < FIRST_DATE || date > LAST_DATE;
+        return date < DateConstant.FIRST_DATE || date > DateConstant.LAST_DATE;
     }
 }

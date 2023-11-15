@@ -2,18 +2,13 @@ package christmas.view;
 
 import static christmas.view.OutputMessage.*;
 
+import christmas.constant.OutputConstant;
 import christmas.domain.menu.Menu;
 import christmas.exception.InputException;
 
 import java.util.Map;
 
 public class OutputView {
-    private static final String MENU_FORMAT = "%s %d개";
-    private static final String PAYMENT_FORMAT = "%,d원";
-    private static final String HAS_NOTHING = "없음";
-    private static final String MINUS_SIGN = "-";
-    private static final int NUMBER_OF_FREEBIE_MENU = 1;
-    private static final int MINIMUM_PRICE_TO_GIVE_FREEBIE_MENU = 120_000;
 
     public void printGreetingMessage() {
         System.out.println(GREETING.getMessage());
@@ -35,7 +30,7 @@ public class OutputView {
         printNewLineAndPrintln(VIEW_ORDERED_MENU.getMessage());
 
         order.forEach((key, value) -> {
-            System.out.printf(MENU_FORMAT, key, value);
+            System.out.printf(OutputConstant.MENU_FORMAT, key, value);
             printNewLine();
         });
     }
@@ -43,7 +38,7 @@ public class OutputView {
     public void printTotalPriceBeforeDiscount(int totalPrice) {
         printNewLineAndPrintln(VIEW_PAY_AMOUNT_BEFORE_DISCOUNT.getMessage());
 
-        printfAndNewLine(PAYMENT_FORMAT, totalPrice);
+        printfAndNewLine(OutputConstant.PAYMENT_FORMAT, totalPrice);
     }
 
     public void printFreebieMenu(int totalPrice) {
@@ -54,11 +49,12 @@ public class OutputView {
     }
 
     private String makeFreebieFormat(int totalPrice) {
-        if (totalPrice < MINIMUM_PRICE_TO_GIVE_FREEBIE_MENU) {
-            return HAS_NOTHING;
+        if (totalPrice < OutputConstant.MINIMUM_PRICE_TO_GIVE_FREEBIE_MENU) {
+            return OutputConstant.HAS_NOTHING;
         }
 
-        return String.format(MENU_FORMAT, Menu.CHAMPAGNE.getMenuName(), NUMBER_OF_FREEBIE_MENU);
+        return String.format(OutputConstant.MENU_FORMAT,
+                Menu.CHAMPAGNE.getMenuName(), OutputConstant.NUMBER_OF_FREEBIE_MENU);
     }
 
     public void printEachEventList(Map<Integer, Integer> appliedEvent) {
@@ -72,14 +68,14 @@ public class OutputView {
         System.out.println(VIEW_TOTAL_EVENT_PRICE.getMessage());
 
         if (totalDiscountPrice > 0) {
-            System.out.print(MINUS_SIGN);
+            System.out.print(OutputConstant.MINUS_SIGN);
         }
-        printfAndNewLine(PAYMENT_FORMAT, totalDiscountPrice);
+        printfAndNewLine(OutputConstant.PAYMENT_FORMAT, totalDiscountPrice);
     }
 
     public void printExpectedPriceAfterDiscount(int expectedPrice) {
         printNewLineAndPrintln(VIEW_EXPECTED_PRICE_AFTER_APPLYING_DISCOUNT.getMessage());
-        printfAndNewLine(PAYMENT_FORMAT, expectedPrice);
+        printfAndNewLine(OutputConstant.PAYMENT_FORMAT, expectedPrice);
     }
 
     public void printBadge(String badge) {

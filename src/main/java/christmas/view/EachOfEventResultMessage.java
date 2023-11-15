@@ -1,5 +1,6 @@
 package christmas.view;
 
+import christmas.constant.OutputConstant;
 import java.util.Arrays;
 import java.util.Map;
 
@@ -10,10 +11,6 @@ public enum EachOfEventResultMessage {
     SPECIAL_DISCOUNT(4, "특별 할인:"),
     GRANT_EVENT(5, "증정 이벤트:");
 
-    private static final String NOTHING = "없음";
-    private static final String SPACE = " ";
-    private static final String PRICE_UNIT = "-%,d원";
-    private static final String NEXT_LINE = "\n";
     private final int messageIndex;
     private final String message;
 
@@ -23,7 +20,7 @@ public enum EachOfEventResultMessage {
     }
 
     public String getMessage() {
-        return message + SPACE;
+        return message + OutputConstant.SPACE;
     }
 
     public static String makeResultFormOfEachEvent(Map<Integer, Integer> discountPrice) {
@@ -32,12 +29,12 @@ public enum EachOfEventResultMessage {
         discountPrice.forEach((key, value) -> {
             String message = EachOfEventResultMessage.getEvent(key).getMessage();
             sb.append(message)
-                    .append(String.format(PRICE_UNIT, value))
-                    .append(NEXT_LINE);
+                    .append(String.format(OutputConstant.PRICE_UNIT_WITH_MINUS_SIGN, value))
+                    .append(OutputConstant.NEXT_LINE);
         });
 
         if (sb.isEmpty()) {
-            return NOTHING + NEXT_LINE;
+            return OutputConstant.HAS_NOTHING + OutputConstant.NEXT_LINE;
         }
         return sb.toString();
     }

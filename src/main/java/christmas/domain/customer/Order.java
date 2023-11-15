@@ -1,5 +1,6 @@
 package christmas.domain.customer;
 
+import christmas.constant.OrderConstant;
 import christmas.domain.menu.Menu;
 import christmas.domain.menu.MenuType;
 import christmas.validator.MenuValidator;
@@ -7,16 +8,6 @@ import christmas.validator.MenuValidator;
 import java.util.Map;
 
 public class Order {
-    private static final int GRANT_CHAMPAGNE_AMOUNT = 120_000;
-    private static final int WEEK_DISCOUNT_AMOUNT = 2_023;
-    private static final int DEFAULT_DISCOUNT_AMOUNT = 1_000;
-    private static final int CHRISTMAS_D_DAY_DISCOUNT_INCREASE_PER_DAY = 100;
-    private static final int CHRISTMAS_D_DAY_EVENT_INDEX = 1;
-    private static final int WEEKDAY_EVENT_INDEX = 2;
-    private static final int WEEKEND_EVENT_INDEX = 3;
-    private static final int SPECIAL_EVENT_INDEX = 4;
-    private static final int GRANT_CHAMPAGNE_INDEX = 5;
-
     private final MenuValidator menuValidator;
     private final Map<String, Integer> order;
 
@@ -50,22 +41,23 @@ public class Order {
     public void calculateChristmasDDayEventDiscount(Map<Integer, Integer> appliedDiscount,
                                                     int elapsedDaysFromDDayEvent) {
         appliedDiscount.put(
-                CHRISTMAS_D_DAY_EVENT_INDEX
-                , DEFAULT_DISCOUNT_AMOUNT + CHRISTMAS_D_DAY_DISCOUNT_INCREASE_PER_DAY * elapsedDaysFromDDayEvent
+                OrderConstant.CHRISTMAS_D_DAY_EVENT_INDEX
+                , OrderConstant.DEFAULT_DISCOUNT_AMOUNT
+                        + OrderConstant.CHRISTMAS_D_DAY_DISCOUNT_INCREASE_PER_DAY * elapsedDaysFromDDayEvent
         );
     }
 
     public void weekdayDiscount(Map<Integer, Integer> appliedDiscount) {
         appliedDiscount.put(
-                WEEKDAY_EVENT_INDEX
-                , menuCount(MenuType.DESSERT) * WEEK_DISCOUNT_AMOUNT
+                OrderConstant.WEEKDAY_EVENT_INDEX
+                , menuCount(MenuType.DESSERT) * OrderConstant.WEEK_DISCOUNT_AMOUNT
         );
     }
 
     public void weekendDiscount(Map<Integer, Integer> appliedDiscount) {
         appliedDiscount.put(
-                WEEKEND_EVENT_INDEX
-                , menuCount(MenuType.MAIN) * WEEK_DISCOUNT_AMOUNT
+                OrderConstant.WEEKEND_EVENT_INDEX
+                , menuCount(MenuType.MAIN) * OrderConstant.WEEK_DISCOUNT_AMOUNT
         );
     }
 
@@ -82,22 +74,22 @@ public class Order {
 
     public void specialDiscount(Map<Integer, Integer> appliedDiscount) {
         appliedDiscount.put(
-                SPECIAL_EVENT_INDEX
-                , DEFAULT_DISCOUNT_AMOUNT
+                OrderConstant.SPECIAL_EVENT_INDEX
+                , OrderConstant.DEFAULT_DISCOUNT_AMOUNT
         );
     }
 
     public void grantChampagneOnOrder(Map<Integer, Integer> appliedDiscount) {
         if(canGrantChampagne(calculateTotalAmountBeforeDiscount())) {
             appliedDiscount.put(
-                    GRANT_CHAMPAGNE_INDEX
+                    OrderConstant.GRANT_CHAMPAGNE_INDEX
                     , Menu.CHAMPAGNE.getPrice()
             );
         }
     }
 
     public boolean canGrantChampagne(int totalAmount) {
-        return totalAmount >= GRANT_CHAMPAGNE_AMOUNT;
+        return totalAmount >= OrderConstant.GRANT_CHAMPAGNE_AMOUNT;
     }
 
     public int calculateTotalDiscount(Map<Integer, Integer> appliedDiscount) {
@@ -108,7 +100,7 @@ public class Order {
     }
 
     public int calculateExpectedPayment(int totalAmount, int discountAmount) {
-        if (totalAmount >= GRANT_CHAMPAGNE_AMOUNT) {
+        if (totalAmount >= OrderConstant.GRANT_CHAMPAGNE_AMOUNT) {
             return totalAmount - discountAmount + Menu.CHAMPAGNE.getPrice();
         }
         return totalAmount - discountAmount;
