@@ -61,6 +61,13 @@ public class OutputView {
         return String.format(MENU_FORMAT, Menu.CHAMPAGNE.getMenuName(), NUMBER_OF_FREEBIE_MENU);
     }
 
+    public void printEachEventList(Map<Integer, Integer> appliedEvent) {
+        printNewLineAndPrintln(VIEW_EVENT_PRICE.getMessage());
+
+        String eventList = EachOfEventResultMessage.makeResultFormOfEachEvent(appliedEvent);
+        System.out.println(eventList);
+    }
+
     private void printNewLineAndPrintln(String message) {
         printNewLine();
         System.out.println(message);
