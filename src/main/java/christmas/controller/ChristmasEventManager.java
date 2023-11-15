@@ -2,6 +2,7 @@ package christmas.controller;
 
 import christmas.domain.Customer;
 import christmas.domain.Date;
+import christmas.domain.EventBadge;
 import christmas.domain.Order;
 import christmas.exception.InputException;
 import christmas.validator.ConvertInputValidator;
@@ -33,6 +34,8 @@ public class ChristmasEventManager {
         printCustomerOrder(customer);
 
         Map<Integer, Integer> appliedEvent = findAppliedEvent(customer);
+
+        printEventResult(customer, appliedEvent);
     }
 
     private Customer readCustomerRequest() {
@@ -73,5 +76,18 @@ public class ChristmasEventManager {
 
     private Map<Integer, Integer> findAppliedEvent(Customer customer) {
         return customer.applyDiscountAmount();
+    }
+
+    private void printEventResult(Customer customer, Map<Integer, Integer> appliedEvent) {
+        int totalPrice = customer.makeTotalPrice();
+        int totalDiscountPrice = customer.makeTotalDiscountPrice(appliedEvent);
+        int expectedPrice = customer.makeExpectedPrice(totalPrice, totalDiscountPrice);
+
+        outputView.printTotalPriceBeforeDiscount(totalPrice);
+        outputView.printFreebieMenu(totalPrice);
+        outputView.printEachEventList(appliedEvent);
+        outputView.printTotalEventPrice(totalDiscountPrice);
+        outputView.printExpectedPriceAfterDiscount(expectedPrice);
+        outputView.printBadge(EventBadge.getEventBadgeName(totalDiscountPrice));
     }
 }
