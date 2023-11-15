@@ -20,7 +20,7 @@ public class NullAndEmptyValidator {
 
     private void validateEmptyValue(String input) {
         if (hasEmptyValue(input)) {
-            throw new InputException(ErrorMessage.INPUT_IS_EMPTY);
+            throw new InputException(ErrorMessage.INPUT_IS_NULL);
         }
     }
 
