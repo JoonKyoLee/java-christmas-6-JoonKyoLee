@@ -77,6 +77,11 @@ public class OutputView {
         printfAndNewLine(PAYMENT_FORMAT, totalDiscountPrice);
     }
 
+    public void printExpectedPriceAfterDiscount(int expectedPrice) {
+        printNewLineAndPrintln(VIEW_EXPECTED_PRICE_AFTER_APPLYING_DISCOUNT.getMessage());
+        printfAndNewLine(PAYMENT_FORMAT, expectedPrice);
+    }
+
     private void printNewLineAndPrintln(String message) {
         printNewLine();
         System.out.println(message);
