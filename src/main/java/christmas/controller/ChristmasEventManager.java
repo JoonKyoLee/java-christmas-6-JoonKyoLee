@@ -5,8 +5,10 @@ import christmas.domain.Date;
 import christmas.domain.Order;
 import christmas.exception.InputException;
 import christmas.validator.ConvertInputValidator;
+import christmas.validator.MenuValidator;
 import christmas.view.InputView;
 import christmas.view.OutputView;
+
 import java.util.function.Supplier;
 
 public class ChristmasEventManager {
@@ -26,6 +28,8 @@ public class ChristmasEventManager {
 
     public void run() {
         Customer customer = readCustomerRequest();
+
+        printCustomerOrder(customer);
     }
 
     private Customer readCustomerRequest() {
@@ -46,9 +50,8 @@ public class ChristmasEventManager {
     private Order takeOrder() {
         outputView.askMenuAndQuantity();
         String order = inputView.readInput();
-        return new Order(convertInputValidator.convertOrder(order));
+        return new Order(new MenuValidator(), convertInputValidator.convertOrder(order));
     }
-
 
     private <T> T repeatUntilReadValidInput(Supplier<T> supplier) {
         while (true) {
@@ -58,5 +61,10 @@ public class ChristmasEventManager {
                 outputView.printErrorMessage(exception);
             }
         }
+    }
+
+    private void printCustomerOrder(Customer customer) {
+        outputView.printEventIntroduction(customer.getVisitingDate());
+        outputView.printOrderList(customer.getCustomerOrder());
     }
 }
