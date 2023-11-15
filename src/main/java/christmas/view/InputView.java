@@ -1,6 +1,7 @@
 package christmas.view;
 
 import camp.nextstep.edu.missionutils.Console;
+
 import christmas.validator.NullAndEmptyValidator;
 
 public class InputView {

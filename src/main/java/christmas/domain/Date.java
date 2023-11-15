@@ -2,6 +2,7 @@ package christmas.domain;
 
 import christmas.exception.ErrorMessage;
 import christmas.exception.InputException;
+
 import java.time.LocalDate;
 
 public class Date {
@@ -28,7 +29,7 @@ public class Date {
         return localDate.getDayOfWeek().getValue();
     }
 
-    public boolean isWeekDay(int dayOfWeek) {
+    public boolean isWeekday(int dayOfWeek) {
         return dayOfWeek == SUNDAY_INDEX || dayOfWeek < FRIDAY_INDEX;
     }
 
