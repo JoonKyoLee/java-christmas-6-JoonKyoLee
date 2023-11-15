@@ -2,12 +2,18 @@ package christmas.view;
 
 import static christmas.view.OutputMessage.*;
 
+import christmas.domain.menu.Menu;
 import christmas.exception.InputException;
+
 import java.util.Map;
 
 public class OutputView {
     private static final String MENU_FORMAT = "%s %d개";
     private static final String PAYMENT_FORMAT = "%,d원";
+    private static final String HAS_NOTHING = "없음";
+    private static final String MINUS_SIGN = "-";
+    private static final int NUMBER_OF_FREEBIE_MENU = 1;
+    private static final int MINIMUM_PRICE_TO_GIVE_FREEBIE_MENU = 120_000;
 
     public void printGreetingMessage() {
         System.out.println(GREETING.getMessage());
@@ -38,6 +44,21 @@ public class OutputView {
         printNewLineAndPrintln(VIEW_PAY_AMOUNT_BEFORE_DISCOUNT.getMessage());
 
         printfAndNewLine(PAYMENT_FORMAT, totalPrice);
+    }
+
+    public void printFreebieMenu(int totalPrice) {
+        printNewLineAndPrintln(VIEW_FREEBIE_MENU.getMessage());
+
+        String freebieFormat = makeFreebieFormat(totalPrice);
+        System.out.println(freebieFormat);
+    }
+
+    private String makeFreebieFormat(int totalPrice) {
+        if(totalPrice < MINIMUM_PRICE_TO_GIVE_FREEBIE_MENU) {
+            return HAS_NOTHING;
+        }
+
+        return String.format(MENU_FORMAT, Menu.CHAMPAGNE.getMenuName(), NUMBER_OF_FREEBIE_MENU);
     }
 
     private void printNewLineAndPrintln(String message) {
