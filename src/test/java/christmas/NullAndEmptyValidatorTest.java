@@ -20,17 +20,19 @@ public class NullAndEmptyValidatorTest {
     @Test
     @DisplayName("고객이 null 값을 입력한 경우 예외를 던진다.")
     void nullValueTest() {
-        assertThatThrownBy(() -> nullAndEmptyValidator.validateNullAndEmpty(NULL_VALUE))
-                .isInstanceOf(IllegalArgumentException.class);
+        throwException(NULL_VALUE);
     }
 
     @DisplayName("고객이 비어있는 값을 입력한 경우 예외를 던진다.")
     @ValueSource(strings = {EMPTY_VALUE, SPACE_VALUE})
     @ParameterizedTest
     void emptyValueTest(String input) {
+        throwException(NULL_VALUE);
+    }
+
+    void throwException(String input) {
         assertThatThrownBy(() -> nullAndEmptyValidator.validateNullAndEmpty(input))
                 .isInstanceOf(IllegalArgumentException.class);
-
     }
 
     @DisplayName("고객이 null 값 또는 비어있지 않은 값을 입력할 경우 예외가 발생하지 않는다.")
