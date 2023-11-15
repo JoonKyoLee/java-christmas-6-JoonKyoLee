@@ -92,4 +92,15 @@ public class Order {
     public boolean canGrantChampagne(int totalAmount) {
         return totalAmount >= GRANT_CHAMPAGNE_AMOUNT;
     }
+
+    public int calculateTotalDiscount(Map<Integer, Integer> appliedDiscount) {
+        return appliedDiscount.values()
+                .stream()
+                .mapToInt(Integer::intValue)
+                .sum();
+    }
+
+    public int calculateExpectedPayment(int totalAmount, int totalDiscountAmount) {
+        return totalAmount - totalDiscountAmount;
+    }
 }
