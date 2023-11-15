@@ -14,14 +14,12 @@ public class Date {
     private static final int FRIDAY_INDEX = 5;
     private static final int SUNDAY_INDEX = 7;
     private final int date;
+    private final int dayOfWeek;
 
     public Date(int date) {
         validate(date);
         this.date = date;
-    }
-
-    public boolean canApplyChristmasDDayDiscount() {
-        return date <= CHRISTMAS_DATE;
+        this.dayOfWeek = calculateDayOfWeek();
     }
 
     public int calculateDayOfWeek() {
@@ -29,15 +27,23 @@ public class Date {
         return localDate.getDayOfWeek().getValue();
     }
 
-    public boolean isWeekday(int dayOfWeek) {
+    public boolean canApplyChristmasDDayDiscount() {
+        return date <= CHRISTMAS_DATE;
+    }
+
+    public int countDaysToApplyChristmasDDayDiscount() {
+        return date - FIRST_DATE;
+    }
+
+    public boolean isWeekday() {
         return dayOfWeek == SUNDAY_INDEX || dayOfWeek < FRIDAY_INDEX;
     }
 
-    public boolean isWeekend(int dayOfWeek) {
+    public boolean isWeekend() {
         return FRIDAY_INDEX <= dayOfWeek && dayOfWeek < SUNDAY_INDEX;
     }
 
-    public boolean hasStarInCalendar(int dayOfWeek) {
+    public boolean hasStarInCalendar() {
         return date == CHRISTMAS_DATE || dayOfWeek == SUNDAY_INDEX;
     }
 
