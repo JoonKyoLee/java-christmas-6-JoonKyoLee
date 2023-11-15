@@ -10,6 +10,7 @@ import christmas.view.InputView;
 import christmas.view.OutputView;
 
 import java.util.function.Supplier;
+import java.util.Map;
 
 public class ChristmasEventManager {
     private final InputView inputView;
@@ -30,6 +31,8 @@ public class ChristmasEventManager {
         Customer customer = readCustomerRequest();
 
         printCustomerOrder(customer);
+
+        Map<Integer, Integer> appliedEvent = findAppliedEvent(customer);
     }
 
     private Customer readCustomerRequest() {
@@ -66,5 +69,9 @@ public class ChristmasEventManager {
     private void printCustomerOrder(Customer customer) {
         outputView.printEventIntroduction(customer.getVisitingDate());
         outputView.printOrderList(customer.getCustomerOrder());
+    }
+
+    private Map<Integer, Integer> findAppliedEvent(Customer customer) {
+        return customer.applyDiscountAmount();
     }
 }
