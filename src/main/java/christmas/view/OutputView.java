@@ -7,6 +7,7 @@ import java.util.Map;
 
 public class OutputView {
     private static final String MENU_FORMAT = "%s %d개";
+    private static final String PAYMENT_FORMAT = "%,d원";
 
     public void printGreetingMessage() {
         System.out.println(GREETING.getMessage());
@@ -31,6 +32,12 @@ public class OutputView {
             System.out.printf(MENU_FORMAT, key, value);
             printNewLine();
         });
+    }
+
+    public void printTotalPriceBeforeDiscount(int totalPrice) {
+        printNewLineAndPrintln(VIEW_PAY_AMOUNT_BEFORE_DISCOUNT.getMessage());
+
+        printfAndNewLine(PAYMENT_FORMAT, totalPrice);
     }
 
     private void printNewLineAndPrintln(String message) {
