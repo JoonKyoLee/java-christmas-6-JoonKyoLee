@@ -54,7 +54,7 @@ public class OutputView {
     }
 
     private String makeFreebieFormat(int totalPrice) {
-        if(totalPrice < MINIMUM_PRICE_TO_GIVE_FREEBIE_MENU) {
+        if (totalPrice < MINIMUM_PRICE_TO_GIVE_FREEBIE_MENU) {
             return HAS_NOTHING;
         }
 
@@ -71,7 +71,7 @@ public class OutputView {
     public void printTotalEventPrice(int totalDiscountPrice) {
         System.out.println(VIEW_TOTAL_EVENT_PRICE.getMessage());
 
-        if(totalDiscountPrice > 0) {
+        if (totalDiscountPrice > 0) {
             System.out.print(MINUS_SIGN);
         }
         printfAndNewLine(PAYMENT_FORMAT, totalDiscountPrice);
@@ -80,6 +80,13 @@ public class OutputView {
     public void printExpectedPriceAfterDiscount(int expectedPrice) {
         printNewLineAndPrintln(VIEW_EXPECTED_PRICE_AFTER_APPLYING_DISCOUNT.getMessage());
         printfAndNewLine(PAYMENT_FORMAT, expectedPrice);
+    }
+
+    public void printBadge(String badge) {
+        printNewLine();
+        System.out.println(VIEW_BADGE.getMessage());
+
+        System.out.println(badge);
     }
 
     private void printNewLineAndPrintln(String message) {
